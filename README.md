@@ -21,6 +21,7 @@ can manage their blogs and account settings.
 - **Responsive Design:**
   - Fully responsive across devices.
 
+
 ## Technologies Used
 
 ### Frontend:
@@ -48,7 +49,7 @@ can manage their blogs and account settings.
 
 
 Deployment
-The application is deployed on Render. You can access the live version here: https://dotblog-frontend.onrender.com/
+The application is deployed on Render. You can access the live version here:     [click](https://dotblog-frontend.onrender.com/)
 
 
 
