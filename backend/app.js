@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://dotblog-frontend.onrender.com",
     methods: ["GET", "PUT", "DELETE", "POST"],
     credentials: true,
   })
