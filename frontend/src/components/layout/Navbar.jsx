@@ -7,10 +7,12 @@ import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import axios from "axios";
 import toast from "react-hot-toast";
-import logo from "../../../public/logo1.svg"
+import ClipLoader from "react-spinners/ClipLoader"; // Import the loader
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false); // State for loader
+
   const handleNavbar = () => {
     setShow(!show);
   };
@@ -22,6 +24,8 @@ const Navbar = () => {
   const navigateTo = useNavigate();
   const handleLogout = async (e) => {
     e.preventDefault();
+        setLoading(true); // Start loader
+
     try {
       const { data } = await axios.get(
         "http://localhost:4000/api/v1/user/logout",
@@ -32,6 +36,8 @@ const Navbar = () => {
       navigateTo("/");
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -107,9 +113,15 @@ const Navbar = () => {
               </Link>
             ) : (
               <div>
-                <button className="logout-btn" onClick={handleLogout}>
-                  LOGOUT
-                </button>
+                {loading ? ( // Show loader instead of the button when loading
+                    <div className="loaderLoading">
+                    <ClipLoader color="#4F46E5" size={40} />
+                    </div>
+                ) : (
+                  <button className="logout-btn" onClick={handleLogout}>
+                    LOGOUT
+                  </button>
+                )}
               </div>
             )}
           </div>
