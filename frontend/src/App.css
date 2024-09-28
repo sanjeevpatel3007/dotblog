@@ -1664,3 +1664,18 @@ footer .container:last-child .links a svg {
   text-align: start;
   width: 100%;
 }
+
+
+
+.loaderLoading{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border: 2px solid white;
+   border-radius: 5px;
+}
+
+
+
+
+
