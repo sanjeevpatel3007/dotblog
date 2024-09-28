@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import ClipLoader from "react-spinners/ClipLoader"; // Import the loader
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 
 const CreateBlog = () => {
   const [category, setCategory] = useState("");
@@ -21,6 +24,9 @@ const CreateBlog = () => {
   const [paraThreeImagePreview, setParaThreeImagePreview] = useState("");
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(true);
+  const [loading, setLoading] = useState(false); // State for loader
+  const navigateTo = useNavigate();
+
 
   const mainImagePreviewHandler = (e) => {
     const file = e.target.files[0];
@@ -61,6 +67,8 @@ const CreateBlog = () => {
 
   const handleBlog = async (e) => {
     e.preventDefault();
+        setLoading(true); // Start loader
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("intro", intro);
@@ -122,9 +130,14 @@ const CreateBlog = () => {
       setParaThreeImage("");
       setParaThreeImagePreview("");
       toast.success(data.message);
+            navigateTo("/"); 
+
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false); // Stop loader
     }
+     
   };
 
   return (
@@ -260,9 +273,25 @@ const CreateBlog = () => {
               <option value={false}>No</option>
             </select>
           </div>
-          <button className="create-btn" type="submit">
+
+          
+         <div>
+         {loading ? ( // Show loader instead of the button when loading
+                 <div className="loaderLoading">
+                 <ClipLoader color="#4F46E5" size={25} />
+
+                 </div>
+                ) : (
+
+         <button className="create-btn" type="submit">
             POST BLOG
           </button>
+                )}
+         </div>
+
+
+
+          
         </form>
       </div>
     </section>
