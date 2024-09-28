@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
+import ClipLoader from "react-spinners/ClipLoader"; // Importing the loader
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -13,6 +14,8 @@ const Register = () => {
   const [education, setEducation] = useState("");
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("");
+    const [loading, setLoading] = useState(false); // State for loader
+
 
   const changeAvatarHandler = (e) => {
     const file = e.target.files[0];
@@ -30,6 +33,8 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+        setLoading(true); // Start loader
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -62,6 +67,8 @@ const Register = () => {
       navigateTo("/");
     } catch (error) {
       toast.error(error.response.data.message);
+    }  finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -145,9 +152,21 @@ const Register = () => {
           <p>
             Already Registered? <Link to={"/login"}>Login Now</Link>
           </p>
-          <button className="submit-btn" type="submit">
-            REGISTER
-          </button>
+       
+        <div>
+            {loading ? ( // Display loader if loading
+              <div className="loaderLoading  ">
+                <ClipLoader color="#4F46E5" size={50} />
+              </div>
+            ) : (
+              <button className="submit-btn" type="submit">
+                REGISTER
+              </button>
+            )}
+
+          </div>
+
+          
         </form>
       </section>
     </article>
