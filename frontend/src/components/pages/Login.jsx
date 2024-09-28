@@ -3,6 +3,8 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
+import ClipLoader from "react-spinners/ClipLoader"; // Importing the spinner
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,9 +12,13 @@ const Login = () => {
   const [role, setRole] = useState("");
   const { mode, isAuthenticated } = useContext(Context);
   const navigateTo = useNavigate();
+    const [loading, setLoading] = useState(false); // State for loader
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
+        setLoading(true); // Start loader
+
     await axios
       .post(
         "https://blog-backend-xmbi.onrender.com/api/v1/user/login",
@@ -31,6 +37,9 @@ const Login = () => {
       })
       .catch((error) => {
         toast.error(error.response.data.message);
+      })
+     .finally(() => {
+        setLoading(false); // Stop loader
       });
   };
 
@@ -70,9 +79,23 @@ const Login = () => {
             Don't have any Account? <Link to={"/register"}>Register Now</Link>
           </p>
 
-          <button className="submit-btn" type="submit">
-            LOGIN
-          </button>
+        <div>
+
+            {loading ? ( // Display loader if loading
+              <div className="loaderLoading ">
+                <ClipLoader color="#4F46E5" size={40} />
+              </div>
+            ) : (
+
+
+              <button className="submit-btn" type="submit">
+                LOGIN
+              </button>
+
+            )}
+          </div>
+
+          
         </form>
       </section>
     </article>
