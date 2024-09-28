@@ -5,10 +5,10 @@ dotenv.config();
 export const sendToken = (user, statusCode, message, res) => { 
  
   console.log("sendToken function called"); // Check if the function is executed
-  console.log("User object: ", user);
+  // console.log("User object: ", user);
 
   const token = user.getJWTToken();
-  console.log("Generated JWT: ", token); // Check if token is generated successfully
+  // console.log("Generated JWT: ", token); // Check if token is generated successfully
 
   const options = {
     expires: new Date(
